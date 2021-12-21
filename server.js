@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const { getAllTodos, retrieveTodo, addTodo, deleteTodo } = require('./db');
+const path = require('path');
 
 const { jsonValidationMiddleware } = require('./middleware/validations');
 const { todosPostSchema } = require('./schemas');
@@ -9,6 +10,17 @@ const { todosPostSchema } = require('./schemas');
 const port = 5500;
 
 const app = express();
+
+
+const result = require('dotenv').config({
+  path: path.join(__dirname, `./.env.${process.env.NODE_ENV}`),
+});
+
+if (result.error) {
+  throw new Error(result.error);
+}
+
+
 
 // Middleware
 app.use(cors());
@@ -51,5 +63,13 @@ app.delete('/todos/:todoId', async (req, res) => {
 
 
 app.listen(port, () => {
-  console.log('Starting server');
+  console.log(`Starting server:
+NODE_ENV=${process.env.NODE_ENV}
+LOG_LEVEL=${process.env.LOG_LEVEL}
+DB_HOST=${process.env.DB_HOST}
+DB_PORT=${process.env.DB_PORT}
+DB_USER=${process.env.DB_USER}
+DB_PASSWORD=${process.env.DB_PASSWORD}
+JWT_PASSWORD=${process.env.JWT_PASSWORD}
+`);
 });
