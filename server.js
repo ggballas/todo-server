@@ -12,12 +12,14 @@ const port = 5500;
 const app = express();
 
 
-const result = require('dotenv').config({
-  path: path.join(__dirname, `./.env.${process.env.NODE_ENV}`),
-});
-
-if (result.error) {
-  throw new Error(result.error);
+if (process.env.NODE_ENV == 'development') {
+  const result = require('dotenv').config({
+    path: path.join(__dirname, `./.env.development`),
+  });
+  
+  if (result.error) {
+    throw new Error(result.error);
+  }
 }
 
 
