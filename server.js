@@ -64,7 +64,7 @@ app.delete('/todos/:todoId', async (req, res) => {
 });
 
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Starting server:
 NODE_ENV=${process.env.NODE_ENV}
 LOG_LEVEL=${process.env.LOG_LEVEL}
